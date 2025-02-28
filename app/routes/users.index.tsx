@@ -1,18 +1,19 @@
 import { createFileRoute, redirect, useLoaderData } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start';
 import { helloWorld } from '../server-functions/hello-world';
+import { serverFnRawResponse } from '../server-functions/raw-response';
 
-const myServerFunction = createServerFn({ method: 'GET' }).handler(async () => {
-  const data = await fetch('https://example.com/time.txt');
-  return data;
 
-  // This alaso does not work
-  // return new Response('Not Found', { status: 404 });
-});
 
 export const Route = createFileRoute('/users/')({
   beforeLoad: async ({ params }) => {
     console.log('beforeLoad', params);
+
+    // This doesn't work, but the below does
+    // Comment this out after seeing it has no effect in browser (no error boundary)
+    return new Response('Not Found', { status: 500 });
+
+    // Uncomment this to see that error boundary handles the response from the server fn
+    // return serverFnRawResponse();
 
     // helloWorld();
     // return new Response('Not found', { status: 404 });
@@ -29,7 +30,7 @@ export const Route = createFileRoute('/users/')({
     console.log('context', context)
     console.log('loader', params)
 
-    return new Response('Not found', { status: 500 });
+    // return new Response('Not found', { status: 500 });
     // throw redirect({ to: '/error' })
 
     // throw new Error('Not found');
