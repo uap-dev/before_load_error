@@ -9,7 +9,7 @@ import { createServerFn } from '@tanstack/react-start';
  * [Symbol.iterator]: "Function is not serializable"; }; ... 14 more ...; text: "Function is not serializable";...'.
  */
 
-export const serverFnRawResponse = createServerFn().handler(async () => {
+export const serverFnRawResponse = createServerFn({ response: 'raw' }).handler(async () => {
   // const data = await fetch('https://example.com/time.txt');
   // return data;
 
