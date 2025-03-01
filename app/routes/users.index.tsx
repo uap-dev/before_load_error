@@ -3,7 +3,6 @@ import { helloWorld } from '../server-functions/hello-world';
 import { serverFnRawResponse } from '../server-functions/raw-response';
 
 
-
 export const Route = createFileRoute('/users/')({
   beforeLoad: async ({ params }) => {
     console.log('beforeLoad', params);

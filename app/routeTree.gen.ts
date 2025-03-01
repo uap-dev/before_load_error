@@ -19,6 +19,7 @@ import { Route as PostsRouteImport } from './routes/posts.route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PostsIndexImport } from './routes/posts.index'
+import { Route as LoginIndexImport } from './routes/login.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
 import { Route as PostsPostIdImport } from './routes/posts.$postId'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
@@ -73,6 +74,12 @@ const PostsIndexRoute = PostsIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PostsRouteRoute,
+} as any)
+
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const UsersUserIdRoute = UsersUserIdImport.update({
@@ -181,6 +188,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersUserIdImport
       parentRoute: typeof UsersRouteImport
     }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/posts/': {
       id: '/posts/'
       path: '/'
@@ -288,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/login': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
@@ -302,6 +317,7 @@ export interface FileRoutesByTo {
   '/redirect': typeof RedirectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
   '/users': typeof UsersIndexRoute
   '/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
@@ -320,6 +336,7 @@ export interface FileRoutesById {
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
   '/_pathlessLayout/_nested-layout/route-a': typeof PathlessLayoutNestedLayoutRouteARoute
@@ -338,6 +355,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/login'
     | '/posts/'
     | '/users/'
     | '/route-a'
@@ -351,6 +369,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/login'
     | '/posts'
     | '/users'
     | '/route-a'
@@ -367,6 +386,7 @@ export interface FileRouteTypes {
     | '/_pathlessLayout/_nested-layout'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/login/'
     | '/posts/'
     | '/users/'
     | '/_pathlessLayout/_nested-layout/route-a'
@@ -382,6 +402,7 @@ export interface RootRouteChildren {
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
+  LoginIndexRoute: typeof LoginIndexRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
 
@@ -392,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
+  LoginIndexRoute: LoginIndexRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
 
@@ -411,6 +433,7 @@ export const routeTree = rootRoute
         "/_pathlessLayout",
         "/deferred",
         "/redirect",
+        "/login/",
         "/posts_/$postId/deep"
       ]
     },
@@ -458,6 +481,9 @@ export const routeTree = rootRoute
     "/users/$userId": {
       "filePath": "users.$userId.tsx",
       "parent": "/users"
+    },
+    "/login/": {
+      "filePath": "login.index.tsx"
     },
     "/posts/": {
       "filePath": "posts.index.tsx",
