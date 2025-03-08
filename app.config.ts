@@ -14,7 +14,6 @@ const sslCert = fs.readFileSync(
   'utf-8',
 );
 
-
 export default defineConfig({
   server: {
     https: {

@@ -20,6 +20,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users.index'
 import { Route as PostsIndexImport } from './routes/posts.index'
 import { Route as LoginIndexImport } from './routes/login.index'
+import { Route as GetNameIndexImport } from './routes/get-name.index'
 import { Route as UsersUserIdImport } from './routes/users.$userId'
 import { Route as PostsPostIdImport } from './routes/posts.$postId'
 import { Route as PathlessLayoutNestedLayoutImport } from './routes/_pathlessLayout/_nested-layout'
@@ -79,6 +80,12 @@ const PostsIndexRoute = PostsIndexImport.update({
 const LoginIndexRoute = LoginIndexImport.update({
   id: '/login/',
   path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GetNameIndexRoute = GetNameIndexImport.update({
+  id: '/get-name/',
+  path: '/get-name/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -187,6 +194,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/users/$userId'
       preLoaderRoute: typeof UsersUserIdImport
       parentRoute: typeof UsersRouteImport
+    }
+    '/get-name/': {
+      id: '/get-name/'
+      path: '/get-name'
+      fullPath: '/get-name'
+      preLoaderRoute: typeof GetNameIndexImport
+      parentRoute: typeof rootRoute
     }
     '/login/': {
       id: '/login/'
@@ -302,6 +316,7 @@ export interface FileRoutesByFullPath {
   '/redirect': typeof RedirectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/get-name': typeof GetNameIndexRoute
   '/login': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -317,6 +332,7 @@ export interface FileRoutesByTo {
   '/redirect': typeof RedirectRoute
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/get-name': typeof GetNameIndexRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
   '/users': typeof UsersIndexRoute
@@ -336,6 +352,7 @@ export interface FileRoutesById {
   '/_pathlessLayout/_nested-layout': typeof PathlessLayoutNestedLayoutRouteWithChildren
   '/posts/$postId': typeof PostsPostIdRoute
   '/users/$userId': typeof UsersUserIdRoute
+  '/get-name/': typeof GetNameIndexRoute
   '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -355,6 +372,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/get-name'
     | '/login'
     | '/posts/'
     | '/users/'
@@ -369,6 +387,7 @@ export interface FileRouteTypes {
     | '/redirect'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/get-name'
     | '/login'
     | '/posts'
     | '/users'
@@ -386,6 +405,7 @@ export interface FileRouteTypes {
     | '/_pathlessLayout/_nested-layout'
     | '/posts/$postId'
     | '/users/$userId'
+    | '/get-name/'
     | '/login/'
     | '/posts/'
     | '/users/'
@@ -402,6 +422,7 @@ export interface RootRouteChildren {
   PathlessLayoutRoute: typeof PathlessLayoutRouteWithChildren
   DeferredRoute: typeof DeferredRoute
   RedirectRoute: typeof RedirectRoute
+  GetNameIndexRoute: typeof GetNameIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   PostsPostIdDeepRoute: typeof PostsPostIdDeepRoute
 }
@@ -413,6 +434,7 @@ const rootRouteChildren: RootRouteChildren = {
   PathlessLayoutRoute: PathlessLayoutRouteWithChildren,
   DeferredRoute: DeferredRoute,
   RedirectRoute: RedirectRoute,
+  GetNameIndexRoute: GetNameIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   PostsPostIdDeepRoute: PostsPostIdDeepRoute,
 }
@@ -433,6 +455,7 @@ export const routeTree = rootRoute
         "/_pathlessLayout",
         "/deferred",
         "/redirect",
+        "/get-name/",
         "/login/",
         "/posts_/$postId/deep"
       ]
@@ -481,6 +504,9 @@ export const routeTree = rootRoute
     "/users/$userId": {
       "filePath": "users.$userId.tsx",
       "parent": "/users"
+    },
+    "/get-name/": {
+      "filePath": "get-name.index.tsx"
     },
     "/login/": {
       "filePath": "login.index.tsx"
